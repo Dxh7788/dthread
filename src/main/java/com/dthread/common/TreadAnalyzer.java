@@ -7,7 +7,7 @@ package com.dthread.common;
  * @date 2019/1/4 09:32
  */
 public class TreadAnalyzer {
-
+    private static Object o = new Object();
     /**analysis分析器*/
     public static void analysis(){
         /**
@@ -93,9 +93,21 @@ public class TreadAnalyzer {
         /**
          * 空线程没有意义,因为它什么都不会做
          * */
+        final Thread thread0 = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                System.out.println("00");
+            }
+        });
         final Thread thread = new Thread(new Runnable() {
             @Override
             public void run() {
+                thread0.start();
+                try {
+                    thread0.join();
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
                 System.out.println("01");
             }
         });
@@ -113,12 +125,89 @@ public class TreadAnalyzer {
         });
         thread2.start();
     }
+    public static void liner() throws InterruptedException {
+        Thread thread00 = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                System.out.println("00");
+            }
+        });
+        Thread thread01 = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                System.out.println("01");
+            }
+        });
+        Thread thread02 = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                System.out.println("02");
+            }
+        });
+        /**
+         * thread00执行完成后,主进程才能继续执行,才会调用thread01.start()和thread01.join()
+         * 同理thread01.join()调用后只有thread01执行完成后才会调用thread02.start()
+         * 千万不能三个线程一起start()否则不会生效
+         * */
+        thread00.start();
+        thread00.join();
+        thread01.start();
+        thread01.join();
+        thread02.start();
+        thread02.join();
+    }
+    /**
+     * 顺序执行2
+     * */
+    public static void linner() throws InterruptedException {
+        Thread thread00 = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                System.out.println("00");
+            }
+        });
+        Thread thread01 = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                System.out.println("01");
+            }
+        });
+        Thread thread02 = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                System.out.println("02");
+            }
+        });
+        thread00.start();
+        //必须同步执行,否则会被打断
+        synchronized (o) {
+            while (thread00.isAlive()) {
+                //继续执行
+                thread00.wait(0);
+            }
+        }
+        //然后执行第二个线程
+        thread01.start();
+        synchronized (o) {
+            while (thread01.isAlive()) {
+                thread01.wait(0);
+            }
+        }
+        //然后执行第三个线程
+        thread02.start();
+        synchronized (o) {
+            while (thread02.isAlive()) {
+                thread02.wait(0);
+            }
+        }
+    }
     /**
      * 执行函数
      * */
-
     public static void main(String[] args) throws InterruptedException {
-        doer();
+        linner();
+        //liner();
+        //doer();
         //dealer();
         //analysis();
     }
