@@ -202,10 +202,36 @@ public class TreadAnalyzer {
         }
     }
     /**
-     * 执行函数
+     * yield测试执行
      * */
+    public static void yeilds(){
+        Thread thread00 = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                Thread.yield();
+                System.out.println("00");
+            }
+        });
+        Thread thread01 = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                Thread.yield();
+                System.out.println("01");
+            }
+        });
+        Thread thread02 = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                System.out.println("02");
+            }
+        });
+        thread00.start();
+        thread01.start();
+        thread02.start();
+    }
     public static void main(String[] args) throws InterruptedException {
-        linner();
+        yeilds();
+        //linner();
         //liner();
         //doer();
         //dealer();
