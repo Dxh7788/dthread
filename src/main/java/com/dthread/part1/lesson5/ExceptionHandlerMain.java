@@ -13,6 +13,18 @@ public class ExceptionHandlerMain {
             }
         });
         thread.setUncaughtExceptionHandler(new ExceptionHandler());
+
+        Thread thread1 = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    Integer a = Integer.parseInt("TTT");
+                }catch (Exception e){
+                    System.out.println("捕获异常");
+                }
+            }
+        });
         thread.start();
+        thread1.start();
     }
 }
