@@ -6,6 +6,9 @@ package com.dthread.part1.lesson5;
  */
 public class ExceptionHandlerMain {
     public static void main(String[] args) {
+        //线程的默认异常处理器
+        Thread.setDefaultUncaughtExceptionHandler(new ExceptionHandler());
+
         Thread thread = new Thread(new Runnable() {
             @Override
             public void run() {
@@ -17,11 +20,7 @@ public class ExceptionHandlerMain {
         Thread thread1 = new Thread(new Runnable() {
             @Override
             public void run() {
-                try {
-                    Integer a = Integer.parseInt("TTT");
-                }catch (Exception e){
-                    System.out.println("捕获异常");
-                }
+                Integer a = Integer.parseInt("TTT");
             }
         });
         thread.start();
