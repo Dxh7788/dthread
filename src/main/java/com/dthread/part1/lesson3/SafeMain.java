@@ -9,7 +9,7 @@ import java.util.concurrent.TimeUnit;
 public class SafeMain {
     public static void main(String[] args) {
         SafeTask safeTask = new SafeTask();
-        for (int i=0;i<10;i++){
+        for (int i=0;i<1;i++){
             Thread thread = new Thread(safeTask);
             thread.start();
             try {
