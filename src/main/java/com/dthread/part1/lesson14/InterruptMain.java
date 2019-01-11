@@ -1,11 +1,14 @@
 package com.dthread.part1.lesson14;
 
+import java.util.Scanner;
+
 /**
  * @author dongxiaohong
  * @date 2019/1/11 11:45
  */
 public class InterruptMain {
 
+    int num = 0;
     /**
      *
      * */
@@ -27,6 +30,30 @@ public class InterruptMain {
             }
             System.out.println("------------------end--------------");
             n++;
+        }
+        System.out.println(new InterruptMain().acquireAcc());
+    }
+
+    public Boolean acquireAcc(){
+        boolean failed = true;
+        try {
+            boolean interrupted = false;
+            for (;;){
+                Scanner scanner = new Scanner(System.in);
+                num = scanner.nextInt();
+                if (num == 0){
+                    return interrupted;
+                }
+                Scanner scanner2 = new Scanner(System.in);
+                num = scanner2.nextInt();
+                if (num == 9 ) {
+                    interrupted = true;
+                }
+            }
+        }finally {
+            if (failed){
+
+            }
         }
     }
 }

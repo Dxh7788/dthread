@@ -1,6 +1,8 @@
 package com.dthread.part1.lesson13;
 
 import java.util.concurrent.locks.AbstractQueuedSynchronizer;
+import java.util.concurrent.locks.Lock;
+import java.util.concurrent.locks.ReentrantLock;
 
 /**
  * @author dongxiaohong
@@ -14,7 +16,13 @@ public class JellySync extends AbstractQueuedSynchronizer {
     }
 
     public static void main(String[] args) {
-        JellySync jellySync = new JellySync();
-        jellySync.acquire(1);
+        new JellySync().exec();
+    }
+
+    public synchronized void exec(){
+        Lock lock = new ReentrantLock();
+        lock.lock();
+        System.out.println(">>>>锁住....");
+        lock.unlock();
     }
 }
