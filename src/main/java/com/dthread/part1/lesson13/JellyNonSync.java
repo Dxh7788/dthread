@@ -10,7 +10,7 @@ import java.util.concurrent.locks.ReentrantLock;
 public class JellyNonSync {
     public static void main(String[] args) {
         final JellyNonSync jellyNonSync = new JellyNonSync();
-        final Lock lock = new ReentrantLock(true);
+        final Lock lock = new ReentrantLock(false);
         Thread[] threads = new Thread[10];
         for (int i=0;i<10;i++) {
             threads[i] = new Thread(new Runnable() {
