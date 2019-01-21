@@ -24,10 +24,12 @@ public class TestObjWaitLockSupport {
             for(int i=0;i<10;i++){
                 sum+=i;
             }
-            LockSupport.park(this);
+            LockSupport.park();
             System.out.println(sum);
         });
         A.start();
+        System.out.println(LockSupport.getBlocker(A));
+        System.out.println(this);
         LockSupport.unpark(A);
     }
 }
